@@ -1,0 +1,120 @@
+/* guest-style.css */
+/* For all guest-facing pages */
+
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #F5F7FA;
+    --accent-color: #FFD700;
+    --success-color: #2ECC71;
+    --warning-color: #F1C40F;
+    --danger-color: #E74C3C;
+    --text-color: #2C3E50;
+    --border-radius: 12px;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+body {
+    background-color: var(--secondary-color);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+}
+
+
+/* --- Shared Components --- */
+.navbar {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.nav-link.active {
+    font-weight: 600;
+}
+
+.content-card {
+    background: white;
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.content-card .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.content-card .card-body {
+    padding: 1.5rem;
+}
+
+/* --- Dashboard Specific --- */
+.summary-card {
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-5px);
+}
+
+.summary-card.bg-primary { background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%); }
+.summary-card.bg-success { background: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%); }
+.summary-card.bg-warning { background: linear-gradient(135deg, #F1C40F 0%, #F39C12 100%); }
+.summary-card.bg-info { background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%); }
+
+
+/* --- Payments & Reviews Page --- */
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+    border: none;
+}
+
+.table td {
+    vertical-align: middle;
+    border-top: 1px solid #e9ecef;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(74, 144, 226, 0.05);
+}
+
+.badge.bg-success { background-color: rgba(46, 204, 113, 0.1) !important; color: #27AE60; }
+.badge.bg-warning { background-color: rgba(241, 196, 15, 0.1) !important; color: #F39C12; }
+.badge.bg-danger { background-color: rgba(231, 76, 60, 0.1) !important; color: #C0392B; }
+
+/* --- Review Card Specific --- */
+.review-card {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.review-rating {
+    color: var(--accent-color);
+}

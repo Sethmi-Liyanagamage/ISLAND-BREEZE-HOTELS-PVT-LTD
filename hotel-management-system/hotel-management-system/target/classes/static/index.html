@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Island Breeze Hotels (Pvt) Ltd</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- AOS Animation -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --light-bg: #f8f9fa;
+      --dark-text: #2c3e50;
+      --light-text: #7f8c8d;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--dark-text);
+      overflow-x: hidden;
+    }
+
+    .hero-section {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                  url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 100px 0;
+      margin-bottom: 50px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 15px 20px;
+      border-bottom: none;
+    }
+
+    .btn-primary {
+      background-color: var(--secondary-color);
+      border: none;
+      padding: 10px 25px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+    }
+
+    .form-control:focus {
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+    }
+
+    .nav-tabs .nav-link.active {
+      color: var(--secondary-color);
+      font-weight: 600;
+      border-bottom: 3px solid var(--secondary-color);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--secondary-color);
+      margin-bottom: 15px;
+    }
+
+    /* Toast Notification Styles */
+    .toast-container {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+    }
+
+    .custom-toast {
+      min-width: 350px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .custom-toast .toast-header {
+      background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
+      color: white;
+      border: none;
+    }
+
+    .custom-toast .btn-close {
+      filter: brightness(0) invert(1);
+    }
+
+    /* Login Card Highlight Animation */
+    @keyframes pulseHighlight {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);
+      }
+      50% {
+        box-shadow: 0 0 0 20px rgba(52, 152, 219, 0);
+      }
+    }
+
+    .highlight-login {
+      animation: pulseHighlight 1.5s ease-in-out 3;
+      border: 3px solid var(--secondary-color) !important;
+    }
+
+    .scroll-to-login {
+      scroll-margin-top: 100px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <i class="fas fa-hotel me-2"></i>Island Breeze
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#rooms">Rooms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#amenities">Amenities</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section text-center d-flex align-items-center">
+    <div class="container" data-aos="fade-up">
+      <h1 class="display-3 fw-bold mb-4">Welcome to Island Breeze Hotels</h1>
+      <p class="lead mb-5">Experience luxury and comfort in the heart of paradise</p>
+      <a href="#" class="btn btn-primary btn-lg px-5" id="bookNowBtn">Book Now</a>
+    </div>
+  </section>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow-lg scroll-to-login" id="loginCard">
+          <div class="card-header text-center py-3">
+            <h3 class="mb-0">Guest Portal</h3>
+          </div>
+          <div class="card-body p-0">
+            <ul class="nav nav-tabs nav-fill" id="authTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">
+                  <i class="fas fa-sign-in-alt me-2"></i>Login
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab">
+                  <i class="fas fa-user-plus me-2"></i>Register
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content p-4">
+              <!-- Login Form -->
+              <div class="tab-pane fade show active" id="login" role="tabpanel">
+                <form id="loginForm" class="needs-validation" novalidate>
+                  <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Email address</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email" required>
+                      <div class="invalid-feedback">
+                        Please enter a valid email address.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                      <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
+                      <button class="btn btn-outline-secondary toggle-password" type="button">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <div class="invalid-feedback">
+                        Please enter your password.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </button>
+                  </div>
+                  <div class="text-center mt-3">
+                    <a href="#" class="text-decoration-none me-3">Forgot password?</a>
+                    <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#contactUsModal">Contact Us</a>
+                  </div>
+                </form>
+              </div>
+              
+              <!-- Registration Form -->
+              <div class="tab-pane fade" id="register" role="tabpanel">
+                <form id="registerForm" class="needs-validation" novalidate>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="firstName" class="form-label">First Name</label>
+                      <input type="text" class="form-control" id="firstName" required>
+                      <div class="invalid-feedback">
+                        Please enter your first name.
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="lastName" class="form-label">Last Name</label>
+                      <input type="text" class="form-control" id="lastName" required>
+                      <div class="invalid-feedback">
+                        Please enter your last name.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="registerEmail" class="form-label">Email address</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      <input type="email" class="form-control" id="registerEmail" required>
+                      <div class="invalid-feedback">
+                        Please enter a valid email address.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      <input type="tel" class="form-control" id="phone" required>
+                      <div class="invalid-feedback">
+                        Please enter your phone number.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="userRole" class="form-label">Register As</label>
+                    <select class="form-select" id="userRole" required>
+                      <option value="GUEST" selected>Guest (Tourist)</option>
+                      <option value="ADMIN">Admin/Staff</option>
+                    </select>
+                  </div>
+                  <div class="mb-3" id="staffIdField" style="display: none;">
+                    <label for="staffId" class="form-label">Staff ID</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                      <input type="text" class="form-control" id="staffId" placeholder="Enter your staff ID">
+                      <div class="invalid-feedback">
+                        Please enter a valid staff ID.
+                      </div>
+                    </div>
+                    <div class="form-text text-info">
+                      <i class="fas fa-info-circle"></i> Staff ID is required for admin/staff registration.
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="registerPassword" class="form-label">Password</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                      <input type="password" class="form-control" id="registerPassword" required>
+                      <button class="btn btn-outline-secondary toggle-password" type="button">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <div class="invalid-feedback">
+                        Please enter a password.
+                      </div>
+                    </div>
+                    <div class="form-text">
+                      Password must be at least 8 characters long and include a number.
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                      <input type="password" class="form-control" id="confirmPassword" required>
+                      <div class="invalid-feedback">
+                        Passwords must match.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-user-plus me-2"></i>Create Account
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="my-5 pt-5" id="features">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold">Why Choose Us</h2>
+        <p class="text-muted">Experience the best in hospitality and comfort</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up">
+          <div class="card h-100 border-0 text-center p-4">
+            <div class="feature-icon">
+              <i class="fas fa-concierge-bell"></i>
+            </div>
+            <h4>24/7 Service</h4>
+            <p class="text-muted">Our dedicated staff is available around the clock to assist you with any request.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="card h-100 border-0 text-center p-4">
+            <div class="feature-icon">
+              <i class="fas fa-wifi"></i>
+            </div>
+            <h4>Free Wi-Fi</h4>
+            <p class="text-muted">Stay connected with high-speed internet access throughout the property.</p>
+          </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="card h-100 border-0 text-center p-4">
+            <div class="feature-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <h4>Restaurant</h4>
+            <p class="text-muted">Enjoy delicious cuisine at our on-site restaurant with a variety of options.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-5 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5>Island Breeze Hotels</h5>
+          <p>123 Galle Road<br>Colombo, 12345</p>
+          <p><i class="fas fa-phone me-2"></i> +94 77 000 7777<br>
+          <i class="fas fa-envelope me-2"></i> info@islandbreeze.com</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white text-decoration-none">Home</a></li>
+            <li><a href="#" class="text-white text-decoration-none requires-auth" data-feature="Rooms & Suites">Rooms & Suites</a></li>
+            <li><a href="#" class="text-white text-decoration-none requires-auth" data-feature="Dining">Dining</a></li>
+            <li><a href="#" class="text-white text-decoration-none requires-auth" data-feature="Amenities">Amenities</a></li>
+            <li><a href="#contact" class="text-white text-decoration-none">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Connect With Us</h5>
+          <div class="social-links">
+            <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-white"><i class="fab fa-tripadvisor"></i></a>
+          </div>
+          <div class="mt-3">
+            <p>Subscribe to our newsletter</p>
+            <div class="input-group">
+              <input type="email" class="form-control" placeholder="Your email" id="newsletterEmail">
+              <button class="btn btn-primary requires-auth" type="button" data-feature="Newsletter">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="text-center">
+        <p class="mb-0">&copy; 2023 Island Breeze Hotels. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AOS Animation -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Custom JS -->
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+
+    // Form validation
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+
+    // Toggle password visibility
+    document.querySelectorAll('.toggle-password').forEach(button => {
+      button.addEventListener('click', function() {
+        const input = this.previousElementSibling;
+        const icon = this.querySelector('i');
+        
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.remove('fa-eye');
+          icon.classList.add('fa-eye-slash');
+        } else {
+          input.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+        }
+      });
+    });
+
+    // Toast Notification Function
+    function showToast(title, message, type = 'info') {
+      const toastContainer = document.getElementById('toastContainer');
+      const toastId = 'toast-' + Date.now();
+      
+      const iconMap = {
+        'info': 'fa-info-circle',
+        'warning': 'fa-exclamation-triangle',
+        'success': 'fa-check-circle',
+        'error': 'fa-times-circle'
+      };
+      
+      const toastHTML = `
+        <div class="toast custom-toast" id="${toastId}" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <i class="fas ${iconMap[type]} me-2"></i>
+            <strong class="me-auto">${title}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            ${message}
+          </div>
+        </div>
+      `;
+      
+      toastContainer.insertAdjacentHTML('beforeend', toastHTML);
+      const toastElement = document.getElementById(toastId);
+      const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+      toast.show();
+      
+      toastElement.addEventListener('hidden.bs.toast', function() {
+        toastElement.remove();
+      });
+    }
+
+    // Highlight Login Card Function
+    function highlightLoginCard() {
+      const loginCard = document.getElementById('loginCard');
+      loginCard.classList.add('highlight-login');
+      
+      // Scroll to login card
+      loginCard.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+      
+      // Remove highlight after animation
+      setTimeout(() => {
+        loginCard.classList.remove('highlight-login');
+      }, 4500);
+    }
+
+    // Handle "Book Now" button
+    document.getElementById('bookNowBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      showToast(
+        'Login Required',
+        'Please login or register to book a room. Create your account in seconds!',
+        'warning'
+      );
+      highlightLoginCard();
+    });
+
+    // Handle all elements requiring authentication
+    document.querySelectorAll('.requires-auth').forEach(element => {
+      element.addEventListener('click', function(e) {
+        e.preventDefault();
+        const feature = this.getAttribute('data-feature') || 'this feature';
+        showToast(
+          'Authentication Required',
+          `Please login to access ${feature}. Sign in or create a free account to continue.`,
+          'info'
+        );
+        highlightLoginCard();
+      });
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        if (!this.classList.contains('requires-auth')) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    });
+
+    // Toggle Staff ID field based on role selection
+    document.getElementById('userRole').addEventListener('change', function() {
+      const staffIdField = document.getElementById('staffIdField');
+      const staffIdInput = document.getElementById('staffId');
+      
+      if (this.value === 'ADMIN') {
+        staffIdField.style.display = 'block';
+        staffIdInput.required = true;
+      } else {
+        staffIdField.style.display = 'none';
+        staffIdInput.required = false;
+        staffIdInput.value = '';
+      }
+    });
+
+    // Handle Registration Form Submission
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Check form validity
+      if (!this.checkValidity()) {
+        this.classList.add('was-validated');
+        return;
+      }
+
+      // Get form values
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('registerEmail').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const role = document.getElementById('userRole').value;
+      const staffId = document.getElementById('staffId').value.trim();
+
+      // Validate password match
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+
+      // Validate password strength
+      if (password.length < 8 || !/\d/.test(password)) {
+        alert('Password must be at least 8 characters long and include a number.');
+        return;
+      }
+
+      // Validate staff ID for admin registration
+      if (role === 'ADMIN') {
+        if (!staffId) {
+          alert('Staff ID is required for admin/staff registration.');
+          return;
+        }
+
+        try {
+          // Validate staff ID with backend
+          const validationResponse = await fetch(`/api/users/validate-staff-id/${staffId}`);
+          
+          if (!validationResponse.ok) {
+            alert('Invalid Staff ID. Please contact your administrator.');
+            return;
+          }
+        } catch (error) {
+          console.error('Staff ID validation error:', error);
+          alert('Unable to validate Staff ID. Please try again.');
+          return;
+        }
+      }
+
+      // Prepare user data
+      const userData = {
+        fullName: `${firstName} ${lastName}`,
+        email: email,
+        password: password,
+        phone: phone,
+        role: role
+      };
+
+      try {
+        // Send registration request to backend
+        const response = await fetch('/api/users/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(userData)
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          showToast('Registration Successful!', `Welcome! You can now login as ${role === 'ADMIN' ? 'Admin' : 'Guest'}.`, 'success');
+          
+          // Clear form
+          this.reset();
+          this.classList.remove('was-validated');
+          document.getElementById('staffIdField').style.display = 'none';
+          
+          // Switch to login tab
+          document.getElementById('login-tab').click();
+        } else {
+          const errorText = await response.text();
+          showToast('Registration Failed', errorText || 'Please try again.', 'error');
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        showToast('Registration Error', 'An error occurred. Please check your connection and try again.', 'error');
+      }
+    });
+
+    // Handle Login Form Submission
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Check form validity
+      if (!this.checkValidity()) {
+        this.classList.add('was-validated');
+        return;
+      }
+
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      try {
+        // For now, we'll implement a simple login check
+        // You may want to create a proper login endpoint in your backend
+        const response = await fetch(`/api/users/email/${email}`);
+        
+        if (response.ok) {
+          const user = await response.json();
+          
+          // Simple password check (Note: In production, use proper authentication)
+          if (user.password === password) {
+            // Store user info in localStorage
+            localStorage.setItem('guestToken', 'authenticated');
+            localStorage.setItem('guestInfo', JSON.stringify({
+              id: user.id,
+              name: user.fullName,
+              email: user.email,
+              phone: user.phone,
+              role: user.role
+            }));
+            
+            // Redirect based on role
+            if (user.role === 'ADMIN' || user.role === 'STAFF') {
+              window.location.href = '/admin-dashboard.html';
+            } else {
+              window.location.href = '/guest-dashboard.html';
+            }
+          } else {
+            showToast('Login Failed', 'Invalid email or password. Please try again.', 'error');
+          }
+        } else {
+          showToast('Login Failed', 'User not found. Please check your email or register.', 'error');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showToast('Login Error', 'An error occurred. Please check your connection and try again.', 'error');
+      }
+    });
+    </script>
+
+    <!-- Contact Us Modal -->
+    <div class="modal fade" id="contactUsModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title"><i class="fas fa-phone-alt me-2"></i>Contact Us</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center mb-4">
+              <i class="fas fa-hotel fa-3x text-primary mb-3"></i>
+              <h4>Island Breeze Hotels</h4>
+              <p class="mb-1">123 Galle road, Colombo, 12345</p>
+              <p class="mb-1"><i class="fas fa-phone me-2"></i> +94 77 000 7777</p>
+              <p class="mb-0"><i class="fas fa-envelope me-2"></i> info@islandbreeze.com</p>
+            </div>
+            <hr>
+            <h6 class="text-center mb-3">Business Hours</h6>
+            <div class="row text-center">
+              <div class="col-6">
+                <p class="mb-1">Monday - Friday</p>
+                <p class="mb-1">Saturday - Sunday</p>
+              </div>
+              <div class="col-6 text-start">
+                <p class="mb-1">9:00 AM - 6:00 PM</p>
+                <p class="mb-1">10:00 AM - 4:00 PM</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <a href="mailto:info@islandbreeze.com" class="btn btn-primary">
+              <i class="fas fa-envelope me-2"></i>Email Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#contactUsModal">
+        <i class="fas fa-phone-alt me-2"></i>Contact Us
+      </a>
+    </div>
+</body>
+</html>
+              <select class="form-select">
+                <option value="guest">Guest (Tourist)</option>
+                <option value="staff">Admin/Staff</option>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

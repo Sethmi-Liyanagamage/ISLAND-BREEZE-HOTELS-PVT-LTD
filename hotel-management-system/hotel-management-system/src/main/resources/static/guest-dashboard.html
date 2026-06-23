@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Dashboard - Island Breeze Hotels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/guest-style.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f6fa;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 40px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card {
+            padding: 25px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .room-card {
+            margin-bottom: 20px;
+        }
+        .room-card img {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-hotel me-2"></i>Island Breeze Hotels
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="guest-dashboard.html">
+                            <i class="fas fa-home me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="guest-payments.html">
+                            <i class="fas fa-credit-card me-1"></i>Payments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="guest-cards.html">
+                            <i class="fas fa-wallet me-1"></i>My Cards
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="guest-reviews.html">
+                            <i class="fas fa-star me-1"></i>Reviews
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="guest-contact.html">
+                            <i class="fas fa-phone-alt me-1"></i>Contact Us
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">Welcome, <span id="guestName">Guest</span>!</h1>
+            <p class="lead">Manage your bookings and enjoy your stay</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        <!-- Stats -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card stat-card">
+                    <div class="stat-value" id="totalBookings">0</div>
+                    <div class="stat-label">Total Bookings</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card">
+                    <div class="stat-value text-success" id="activeBookings">0</div>
+                    <div class="stat-label">Active Bookings</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card">
+                    <div class="stat-value text-info" id="totalSpent">$0</div>
+                    <div class="stat-label">Total Spent</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Bookings -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title mb-4"><i class="fas fa-calendar-check me-2"></i>My Bookings</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Room</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Rooms -->
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title mb-4"><i class="fas fa-door-open me-2"></i>Available Rooms</h3>
+                <div class="row" id="roomsContainer">
+                    <div class="col-12 text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Booking Modal -->
+    <div class="modal fade" id="viewBookingModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title"><i class="fas fa-eye me-2"></i>Booking Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Booking ID:</label>
+                            <p id="viewBookingId" class="form-control-plaintext">-</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Status:</label>
+                            <p id="viewBookingStatus" class="form-control-plaintext">-</p>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">Room Details:</label>
+                            <p id="viewRoomDetails" class="form-control-plaintext">-</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Check-in Date:</label>
+                            <p id="viewCheckInDate" class="form-control-plaintext">-</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Check-out Date:</label>
+                            <p id="viewCheckOutDate" class="form-control-plaintext">-</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Number of Guests:</label>
+                            <p id="viewNumberOfGuests" class="form-control-plaintext">-</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Total Amount:</label>
+                            <p id="viewTotalAmount" class="form-control-plaintext text-primary fs-5">-</p>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-bold">Created At:</label>
+                            <p id="viewCreatedAt" class="form-control-plaintext">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="cancelBookingBtn" onclick="cancelBooking()">
+                        <i class="fas fa-times me-2"></i>Cancel Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Room Modal -->
+    <div class="modal fade" id="bookRoomModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-calendar-plus me-2"></i>Book Room</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bookRoomForm">
+                        <input type="hidden" id="selectedRoomId">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Room Details:</label>
+                            <p id="roomDetails" class="form-control-plaintext">-</p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="checkInDate" class="form-label">Check-in Date</label>
+                            <input type="date" class="form-control" id="checkInDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="checkOutDate" class="form-label">Check-out Date</label>
+                            <input type="date" class="form-control" id="checkOutDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="numberOfGuests" class="form-label">Number of Guests</label>
+                            <input type="number" class="form-control" id="numberOfGuests" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Total Amount:</label>
+                            <p id="totalAmount" class="form-control-plaintext text-primary fs-4">$0</p>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmBooking()">
+                        <i class="fas fa-check me-2"></i>Confirm Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const guestInfo = JSON.parse(localStorage.getItem('guestInfo') || '{}');
+        const guestToken = localStorage.getItem('guestToken');
+
+        if (!guestToken) {
+            window.location.href = 'index.html';
+        }
+
+        if (guestInfo.name) {
+            document.getElementById('guestName').textContent = guestInfo.name;
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('guestToken');
+            localStorage.removeItem('guestInfo');
+            window.location.href = 'index.html';
+        });
+
+        async function fetchGuestBookings() {
+            try {
+                const response = await fetch(`/api/bookings/guest/${guestInfo.id}`);
+                if (!response.ok) {
+                    const error = await response.text();
+                    throw new Error(error || 'Failed to fetch bookings');
+                }
+                const bookings = await response.json();
+                displayBookings(bookings);
+                updateStats(bookings);
+                return bookings;
+            } catch (error) {
+                console.error('Error:', error);
+                const tbody = document.getElementById('bookingsTableBody');
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center text-danger">
+                            Failed to load bookings: ${error.message || 'Unknown error'}
+                        </td>
+                    </tr>`;
+                throw error; // Re-throw to be caught by Promise.all
+            }
+        }
+
+        function displayBookings(bookings) {
+            const tbody = document.getElementById('bookingsTableBody');
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No bookings found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = bookings.map(booking => `
+                <tr>
+                    <td><strong>#${booking.bookingId || booking.id}</strong></td>
+                    <td>${booking.roomDetails || booking.roomId}</td>
+                    <td>${booking.checkInDate}</td>
+                    <td>${booking.checkOutDate}</td>
+                    <td><span class="badge bg-${getStatusColor(booking.status)}">${booking.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick='viewBooking(${JSON.stringify(booking)})'>
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats(bookings) {
+            const total = bookings.length;
+            const active = bookings.filter(b => b.status === 'Confirmed' || b.status === 'Checked-in').length;
+            document.getElementById('totalBookings').textContent = total;
+            document.getElementById('activeBookings').textContent = active;
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'Pending': 'warning',
+                'Confirmed': 'info',
+                'Checked-in': 'success',
+                'Checked-out': 'secondary',
+                'Cancelled': 'danger'
+            };
+            return colors[status] || 'secondary';
+        }
+
+        async function fetchAvailableRooms() {
+            try {
+                const response = await fetch('/api/rooms/available');
+                if (!response.ok) {
+                    const error = await response.text();
+                    throw new Error(error || 'Failed to fetch rooms');
+                }
+                const rooms = await response.json();
+                displayRooms(rooms);
+                return rooms;
+            } catch (error) {
+                console.error('Error:', error);
+                const container = document.getElementById('roomsContainer');
+                container.innerHTML = `
+                    <div class="col-12 text-center text-danger">
+                        Failed to load available rooms: ${error.message || 'Unknown error'}
+                    </div>`;
+                throw error; // Re-throw to be caught by Promise.all
+            }
+        }
+
+        function getRoomImage(roomType) {
+            const images = {
+                'Standard': 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=500&h=300&fit=crop',
+                'Deluxe': 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=500&h=300&fit=crop',
+                'Family': 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=500&h=300&fit=crop',
+                'Presidential': 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=500&h=300&fit=crop'
+            };
+            return images[roomType] || 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=500&h=300&fit=crop';
+        }
+
+        function displayRooms(rooms) {
+            const container = document.getElementById('roomsContainer');
+            if (rooms.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center text-muted">No available rooms</div>';
+                return;
+            }
+
+            container.innerHTML = rooms.map(room => `
+                <div class="col-md-4 room-card">
+                    <div class="card">
+                        <img src="${getRoomImage(room.type)}" class="card-img-top" alt="${room.type}">
+                        <div class="card-body">
+                            <h5 class="card-title">${room.type}</h5>
+                            <p class="card-text">
+                                <i class="fas fa-door-open me-2"></i>Room ${room.roomNumber}<br>
+                                <i class="fas fa-users me-2"></i>${room.capacity} Guests<br>
+                                <strong class="text-primary">$${room.pricePerNight}/night</strong>
+                            </p>
+                            <button class="btn btn-primary w-100" onclick='bookRoom(${JSON.stringify(room)})'>
+                                <i class="fas fa-calendar-plus me-2"></i>Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        let currentBooking = null;
+
+        function viewBooking(booking) {
+            currentBooking = booking;
+            
+            // Populate modal with booking details
+            document.getElementById('viewBookingId').textContent = booking.bookingId || booking.id || 'N/A';
+            document.getElementById('viewBookingStatus').innerHTML = `<span class="badge bg-${getStatusColor(booking.status)}">${booking.status || 'Unknown'}</span>`;
+            document.getElementById('viewRoomDetails').textContent = booking.roomDetails || booking.roomId || 'N/A';
+            document.getElementById('viewCheckInDate').textContent = booking.checkInDate || 'N/A';
+            document.getElementById('viewCheckOutDate').textContent = booking.checkOutDate || 'N/A';
+            document.getElementById('viewNumberOfGuests').textContent = booking.numberOfGuests || 'N/A';
+            document.getElementById('viewTotalAmount').textContent = '$' + (booking.totalAmount || 0);
+            document.getElementById('viewCreatedAt').textContent = booking.createdAt || 'N/A';
+            
+            // Show/hide cancel button based on status
+            const cancelBtn = document.getElementById('cancelBookingBtn');
+            if (booking.status === 'PENDING' || booking.status === 'Confirmed') {
+                cancelBtn.style.display = 'inline-block';
+            } else {
+                cancelBtn.style.display = 'none';
+            }
+            
+            // Show modal
+            new bootstrap.Modal(document.getElementById('viewBookingModal')).show();
+        }
+
+        async function cancelBooking() {
+            if (!currentBooking) return;
+            
+            if (!confirm('Are you sure you want to cancel this booking?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/bookings/${currentBooking.bookingId || currentBooking.id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    bootstrap.Modal.getInstance(document.getElementById('viewBookingModal')).hide();
+                    alert('Booking cancelled successfully!');
+                    fetchGuestBookings();
+                } else {
+                    alert('Failed to cancel booking');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while cancelling the booking');
+            }
+        }
+
+        let selectedRoom = null;
+
+        function bookRoom(room) {
+            selectedRoom = room;
+            document.getElementById('selectedRoomId').value = room.id;
+            document.getElementById('roomDetails').textContent = `${room.type} - Room ${room.roomNumber} ($${room.pricePerNight}/night)`;
+            document.getElementById('numberOfGuests').max = room.capacity;
+            
+            // Set minimum dates
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('checkInDate').min = today;
+            document.getElementById('checkOutDate').min = today;
+            
+            // Reset form
+            document.getElementById('bookRoomForm').reset();
+            document.getElementById('selectedRoomId').value = room.id;
+            document.getElementById('totalAmount').textContent = '$0';
+            
+            // Show modal
+            new bootstrap.Modal(document.getElementById('bookRoomModal')).show();
+        }
+
+        // Calculate total amount when dates change
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkInInput = document.getElementById('checkInDate');
+            const checkOutInput = document.getElementById('checkOutDate');
+            
+            function calculateTotal() {
+                if (checkInInput.value && checkOutInput.value && selectedRoom) {
+                    const checkIn = new Date(checkInInput.value);
+                    const checkOut = new Date(checkOutInput.value);
+                    const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                    
+                    if (nights > 0) {
+                        const total = nights * selectedRoom.pricePerNight;
+                        document.getElementById('totalAmount').textContent = `$${total.toFixed(2)} (${nights} night${nights > 1 ? 's' : ''})`;
+                    } else {
+                        document.getElementById('totalAmount').textContent = '$0';
+                    }
+                }
+            }
+            
+            checkInInput.addEventListener('change', function() {
+                checkOutInput.min = this.value;
+                calculateTotal();
+            });
+            
+            checkOutInput.addEventListener('change', calculateTotal);
+        });
+
+        async function confirmBooking() {
+            const checkInDate = document.getElementById('checkInDate').value;
+            const checkOutDate = document.getElementById('checkOutDate').value;
+            const numberOfGuests = document.getElementById('numberOfGuests').value;
+            
+            if (!checkInDate || !checkOutDate || !numberOfGuests) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const checkIn = new Date(checkInDate);
+            const checkOut = new Date(checkOutDate);
+            const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+            
+            if (nights <= 0) {
+                alert('Check-out date must be after check-in date');
+                return;
+            }
+            
+            const totalAmount = nights * selectedRoom.pricePerNight;
+            
+            const booking = {
+                guestId: guestInfo.id,
+                guestName: guestInfo.name,
+                roomId: selectedRoom.id,
+                roomDetails: `${selectedRoom.type} - Room ${selectedRoom.roomNumber}`,
+                checkInDate: checkInDate,
+                checkOutDate: checkOutDate,
+                numberOfGuests: parseInt(numberOfGuests),
+                totalAmount: totalAmount,
+                status: 'PENDING'
+            };
+            
+            try {
+                const response = await fetch('/api/bookings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(booking)
+                });
+                
+                if (response.ok) {
+                    bootstrap.Modal.getInstance(document.getElementById('bookRoomModal')).hide();
+                    alert('Booking created successfully!');
+                    fetchGuestBookings();
+                    fetchAvailableRooms();
+                } else {
+                    const error = await response.text();
+                    alert('Failed to create booking: ' + error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while creating the booking');
+            }
+        }
+
+        // Load both bookings and rooms in parallel
+        Promise.all([
+            fetchGuestBookings().catch(error => {
+                console.error('Error loading bookings:', error);
+                const tbody = document.getElementById('bookingsTableBody');
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Failed to load bookings. Please refresh the page.</td></tr>';
+            }),
+            fetchAvailableRooms().catch(error => {
+                console.error('Error loading rooms:', error);
+                const container = document.getElementById('roomsContainer');
+                container.innerHTML = '<div class="col-12 text-center text-danger">Failed to load available rooms. Please try again later.</div>';
+            })
+        ]);
+    </script>
+</body>
+</html>

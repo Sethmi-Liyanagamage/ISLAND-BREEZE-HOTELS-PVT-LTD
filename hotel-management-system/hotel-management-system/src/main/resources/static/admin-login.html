@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Island Breeze Hotels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border: none;
+        }
+
+        .card-header i {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .card-body {
+            padding: 40px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group-text {
+            background-color: var(--light-bg);
+            border: 1px solid #dee2e6;
+            border-right: none;
+        }
+
+        .form-control {
+            border-left: none;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .alert {
+            border-radius: 10px;
+            display: none;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: var(--light-bg);
+        }
+
+        .spinner-border-sm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-shield-halved"></i>
+                <h2 class="mb-0">Admin Portal</h2>
+                <p class="mb-0 mt-2">Island Breeze Hotels Management</p>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger" id="errorAlert" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <span id="errorMessage"></span>
+                </div>
+
+                <form id="adminLoginForm" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope me-2"></i>Email
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                            <div class="invalid-feedback">
+                                Please enter your email.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock me-2"></i>Password
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <div class="invalid-feedback">
+                                Please enter your password.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="text-decoration-none">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <span class="spinner-border spinner-border-sm me-2" id="loginSpinner"></span>
+                        <i class="fas fa-sign-in-alt me-2"></i>Login to Dashboard
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="back-link">
+            <a href="index.html">
+                <i class="fas fa-arrow-left me-2"></i>Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Form submission
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
+            }
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorAlert = document.getElementById('errorAlert');
+            const spinner = document.getElementById('loginSpinner');
+            const submitBtn = this.querySelector('button[type="submit"]');
+
+            // Show loading state
+            spinner.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            errorAlert.style.display = 'none';
+
+            try {
+                // Fetch user by email
+                const response = await fetch(`/api/users/email/${email}`);
+                
+                if (response.ok) {
+                    const user = await response.json();
+                    
+                    // Check if user is admin/staff
+                    if (user.role !== 'ADMIN' && user.role !== 'STAFF') {
+                        document.getElementById('errorMessage').textContent = 'Access denied. Admin credentials required.';
+                        errorAlert.style.display = 'block';
+                        return;
+                    }
+                    
+                    // Verify password
+                    if (user.password === password) {
+                        // Store admin info in localStorage
+                        localStorage.setItem('adminToken', 'authenticated');
+                        localStorage.setItem('adminInfo', JSON.stringify({
+                            id: user.id,
+                            name: user.fullName,
+                            email: user.email,
+                            phone: user.phone,
+                            role: user.role
+                        }));
+                        
+                        // Redirect to dashboard
+                        window.location.href = 'admin-dashboard.html';
+                    } else {
+                        document.getElementById('errorMessage').textContent = 'Invalid email or password.';
+                        errorAlert.style.display = 'block';
+                    }
+                } else {
+                    document.getElementById('errorMessage').textContent = 'Invalid email or password.';
+                    errorAlert.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                document.getElementById('errorMessage').textContent = 'An error occurred. Please try again.';
+                errorAlert.style.display = 'block';
+            } finally {
+                spinner.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

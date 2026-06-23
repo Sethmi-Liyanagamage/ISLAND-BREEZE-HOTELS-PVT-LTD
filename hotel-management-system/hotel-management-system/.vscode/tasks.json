@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Hotel Management System",
+			"type": "shell",
+			"command": "mvn clean install",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [
+				"$maven"
+			],
+			"group": "build"
+		}
+	]
+}
